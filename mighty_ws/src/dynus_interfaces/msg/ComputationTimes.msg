@@ -1,0 +1,4 @@
+std_msgs/Header header
+float64 total_planning_ms
+float64 frontend_planning_ms
+float64 trajectory_optimization_ms

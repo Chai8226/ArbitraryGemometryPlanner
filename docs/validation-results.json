@@ -1,0 +1,94 @@
+[
+  {
+    "case": "narrow-t",
+    "map": "narrow",
+    "shape": "t",
+    "loaded": true,
+    "late_map_markers": 1,
+    "late_map_triangles": 264,
+    "late_boundary_markers": 2,
+    "task": {
+      "reached": true,
+      "failure": null,
+      "plan_ok": true,
+      "executable_trajectories": 1,
+      "frontend_points": 3,
+      "backend_points": 109,
+      "frontend_ms": 3.7386899999999996,
+      "backend_ms": 5.549189,
+      "moving_state_samples": 481,
+      "endpoint_yaw_error_rad": 0.0
+    },
+    "execution_passed": true,
+    "clean_exit": true
+  },
+  {
+    "case": "block-t",
+    "map": "block",
+    "shape": "t",
+    "loaded": true,
+    "late_map_markers": 1,
+    "late_map_triangles": 2400,
+    "late_boundary_markers": 0,
+    "task": {
+      "reached": true,
+      "failure": null,
+      "plan_ok": true,
+      "executable_trajectories": 1,
+      "frontend_points": 4,
+      "backend_points": 118,
+      "frontend_ms": 214.721,
+      "backend_ms": 26.302237,
+      "moving_state_samples": 645,
+      "endpoint_yaw_error_rad": 0.0
+    },
+    "execution_passed": true,
+    "clean_exit": true
+  },
+  {
+    "case": "forest-v",
+    "map": "forest",
+    "shape": "v",
+    "loaded": true,
+    "late_map_markers": 1,
+    "late_map_triangles": 4080,
+    "late_boundary_markers": 0,
+    "task": {
+      "reached": true,
+      "failure": null,
+      "plan_ok": true,
+      "executable_trajectories": 1,
+      "frontend_points": 5,
+      "backend_points": 109,
+      "frontend_ms": 318.309,
+      "backend_ms": 12.682081,
+      "moving_state_samples": 1130,
+      "endpoint_yaw_error_rad": 0.0
+    },
+    "execution_passed": true,
+    "clean_exit": true
+  },
+  {
+    "case": "hole-cross",
+    "map": "hole",
+    "shape": "cross",
+    "loaded": true,
+    "late_map_markers": 6,
+    "late_map_triangles": 26110,
+    "late_boundary_markers": 0,
+    "task": {
+      "reached": true,
+      "failure": null,
+      "plan_ok": true,
+      "executable_trajectories": 1,
+      "frontend_points": 8,
+      "backend_points": 104,
+      "frontend_ms": 110.958,
+      "backend_ms": 85.186501,
+      "moving_state_samples": 986,
+      "endpoint_yaw_error_rad": 0.0
+    },
+    "execution_passed": true,
+    "clean_exit": true
+  }
+]

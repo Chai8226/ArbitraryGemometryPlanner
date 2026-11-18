@@ -1,0 +1,77 @@
+# MIGHTY two-layer configuration.
+#
+# Lower layer: planner/optimizer algorithm parameters for mighty_node.
+# Referenced from config/mighty.yaml via `extends: params/mighty_node.yaml`.
+mighty_node:
+  ros__parameters:
+    known_map_pcd_path: ''
+    shape_aware_astar.ghost_spacing: 1.0
+    shape_aware_astar.max_ghosts: 100
+    shape_aware_astar.timeout_seconds: 1.0
+    shape_aware_astar.max_expansions: 250000
+    shape_aware_astar.heuristic_weight: 1.5
+    shape_aware_astar.spatial_resolution: 0.2
+    shape_aware_astar.yaw_resolution: 0.17453292519943295
+    shape_aware_astar.max_yaw_delta_per_step: 1.5707963267948966
+    shape_aware_astar.max_yaw_candidates: 5
+    shape_aware_astar.yaw_cost_weight: 0.2
+    shape_aware_astar.collision_sample_max_distance: 0.2
+    shape_aware_astar.collision_sample_max_yaw_step: 0.17453292519943295
+    shape_aware_astar.smoothing.enabled: true
+    shape_aware_astar.smoothing.iterations: 4
+    shape_aware_astar.smoothing.alpha: 0.35
+    shape_aware_astar.virtual_ceiling_height: 3.5
+    shape_aware_astar.numeric_tolerance: 1.0e-08
+    shape_aware_astar.coarse_spatial_resolution: 0.4
+    x_min: -1000.0
+    x_max: 1000.0
+    y_min: -1000.0
+    y_max: 1000.0
+    z_min: 1.0
+    z_max: 5.0
+    force_goal_z: true
+    default_goal_z: 1.0
+    goal_radius: 0.5
+    time_weight: 5.0e+2
+    stat_weight: 1.0e+3
+    jerk_weight: 10.0
+    yaw_jerk_weight: 10.0
+    yaw_reference_weight: 10.0
+    dyn_constr_vel_weight: 1.0e+3
+    dyn_constr_acc_weight: 1.0e+3
+    dyn_constr_jerk_weight: 1.0e+3
+    planner_Co: 0.1
+    planner_Co_normal: 0.1
+    planner_Co_small: 0.05
+    planner_Co_real: 0.05
+    init_mode: topp
+    light_activation_ladder: true
+    max_dist_vertexes: 2.0
+    spline_degree: 5
+    dc: 0.01
+    pos_anchor_weight: 0.0
+    dyn_constr_bodyrate_weight: 0.0
+    dyn_constr_tilt_weight: 0.0
+    dyn_constr_thrust_weight: 0.0
+    f_dec_coeff: 1.0e-3
+    cautious_factor: 1.0e-06
+    past: 3
+    max_linesearch: 64
+    max_iterations: 1000
+    g_epsilon: 1.0e-05
+    delta: 0.001
+    alpha_filter_dyaw: 0.8
+    yaw_acc_max: 2.0
+    yaw_goal_tolerance: 0.04
+    yaw_spinning_threshold: 10000
+    yaw_spinning_dyaw: 1.0
+    global_once.refinement_timeout_seconds: 2.9
+    global_once.hard_timeout_seconds: 5.0
+    global_once.minimum_interior_speed: 0.2
+    trajectory_downsample_points: 500
+    mpc_path_spacing: 0.05
+    debug_verbose: false
+    verbose_computation_time: false
+    debug_log_file: /tmp/mighty_debug.log
+    use_state_update: true
+    known_map.resolution: 0.15

@@ -1,0 +1,9 @@
+<launch>
+  <arg name="namespace" default="NX01" />
+  <arg name="params_file" />
+  <group ns="$(arg namespace)">
+    <rosparam command="load" file="$(arg params_file)" />
+    <node pkg="mighty" type="mighty" name="mighty_node" output="screen" launch-prefix="stdbuf -oL -eL" required="true" />
+    <node pkg="mighty" type="fake_sim" name="fake_sim" output="screen" launch-prefix="stdbuf -oL -eL" required="true" />
+  </group>
+</launch>

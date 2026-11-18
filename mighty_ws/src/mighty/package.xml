@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="2">
+  <name>mighty</name>
+  <version>0.0.0</version>
+  <description>Known-map whole-body trajectory planning simulation for ROS1 Noetic.</description>
+  <maintainer email="Chai8226@users.noreply.github.com">Chai8226</maintainer>
+  <license>GPL-3.0-only</license>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roslib</depend>
+  <depend>roscpp</depend>
+  <exec_depend>rospy</exec_depend>
+  <depend>dynus_interfaces</depend>
+  <depend>visualization_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>pcl_conversions</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <!-- JSON 3.10.5 and FCL 0.7 are pinned by scripts/build_noetic_fcl.sh. -->
+
+
+
+  <depend>eigen</depend>
+  <exec_depend>roslaunch</exec_depend><exec_depend>rviz</exec_depend>
+  <exec_depend>python3-yaml</exec_depend><exec_depend>tmux</exec_depend><exec_depend>tmuxp</exec_depend>
+
+</package>

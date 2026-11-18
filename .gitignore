@@ -1,0 +1,10 @@
+mighty_ws/build/
+mighty_ws/devel/
+mighty_ws/install/
+mighty_ws/logs/
+mighty_ws/.catkin_tools/
+mighty_ws/.deps/
+__pycache__/
+*.py[cod]
+results/
+Testing/

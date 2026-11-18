@@ -1,0 +1,193 @@
+Panels:
+- Class: rviz/Displays
+  Name: Displays
+  Property Tree Widget:
+    Expanded:
+    - /Core1
+    - /Core1/Planning1
+    Splitter Ratio: 0.5
+  Tree Height: 720
+- Class: rviz/Selection
+  Name: Selection
+- Class: rviz/Tool Properties
+  Expanded:
+  - /2D Goal Pose1
+  Name: Tool Properties
+  Splitter Ratio: 0.5
+- Class: rviz/Views
+  Expanded:
+  - /Current View1
+  Name: Views
+  Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ''
+  Displays:
+  - Class: rviz/Group
+    Displays:
+    - Alpha: 0.35
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 120; 120; 120
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Ground Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 30
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 1
+        Min Value: 0
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 90; 145; 220
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Known Map (PCD)
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.1
+      Style: Flat Squares
+      Topic: /NX01/known_map_cloud
+      Use Fixed Frame: true
+      Use rainbow: false
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: false
+      Name: Map PolyMap Surface
+      Namespaces:
+        surface: true
+      Marker Topic: /NX01/polymap
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: false
+      Name: Map Boundary Solids
+      Namespaces:
+        boundary: true
+      Marker Topic: /NX01/polymap/boundary
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Name: UAV Pose
+      Namespaces: {}
+      Marker Topic: /NX01/drone_marker
+      Value: true
+    Enabled: true
+    Name: Core
+  - Class: rviz/Group
+    Displays:
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Name: Current Collision Shape
+      Namespaces:
+        shape_aware_astar_current_body: true
+      Marker Topic: /NX01/shape_aware_astar/current_body
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 0; 190; 255
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.08
+      Name: Front-end Shape A* Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 255; 255
+      Pose Style: None
+      Radius: 0.03
+      Shaft Length: 0.1
+      Shaft Radius: 0.01
+      Topic: /NX01/shape_aware_astar/path
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Name: Front-end Body Samples
+      Namespaces:
+        shape_aware_astar_body_ghosts: true
+      Marker Topic: /NX01/shape_aware_astar/body_ghosts
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Name: Middle-stage Trajectory
+      Namespaces: {}
+      Marker Topic: /NX01/traj_middle
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Name: Back-end Trajectory
+      Namespaces: {}
+      Marker Topic: /NX01/traj_backend
+      Value: true
+    Enabled: true
+    Name: Planning
+  Enabled: true
+  Global Options:
+    Background Color: 35; 38; 45
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+  - Class: rviz/Interact
+    Hide Inactive Objects: true
+  - Class: rviz/MoveCamera
+  - Class: rviz/Select
+  - Class: rviz/FocusCamera
+  - Class: rviz/Measure
+    Line color: 128; 128; 0
+  - Class: rviz/SetGoal
+    Topic: /NX01/term_goal
+  Transformation:
+    Current:
+      Class: rviz/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 35
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 1.5
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.7
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 0.8
+    Saved: null
+Window Geometry:
+  Height: 900
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Width: 1500
+  X: 100
+  Y: 100
