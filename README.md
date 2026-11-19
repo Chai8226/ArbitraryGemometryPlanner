@@ -1,16 +1,10 @@
 # Arbitrary Geometry Planner
 
-Known-map trajectory planning for non-spherical bodies, jointly planning three-dimensional position and yaw. This release contains the shape-aware search frontend, trajectory optimization backend, ROS1 simulation, RViz interface, and prepared map and body geometry.
-
-PolyMap construction, geometry generation, competing planners, real-world experiment assets, and manuscript sources are outside this release. The supplied final maps and shapes can be loaded directly; no map-building step is required.
-
 ![ROS1 RViz demo: narrow map with planned trajectory and swept body geometry](docs/images/demo.png)
 
-![Trajectory planning through scattered obstacles](docs/images/1.gif)
-
-![Trajectory planning through an obstacle field](docs/images/2.gif)
-
-![Trajectory planning through a grid of openings](docs/images/3.gif)
+|                                                                       |                                                                     |                                                                      |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| ![Trajectory planning through scattered obstacles](docs/images/1.gif) | ![Trajectory planning through an obstacle field](docs/images/2.gif) | ![Trajectory planning through a grid of openings](docs/images/3.gif) |
 
 ## Requirements and build
 
@@ -66,4 +60,4 @@ The launcher creates the `mighty_known_map` tmux session. Use `tmux attach -t mi
 
 ## License and provenance
 
-The combined release is distributed under [GPL-3.0-only](LICENSE). It builds on [MIT ACL MIGHTY](https://github.com/mit-acl/mighty) and the [Shape-Traj development repository](https://github.com/Chai8226/Shape-Traj). Original copyright notices and applicable third-party terms remain in force; see [third-party notices](THIRD_PARTY_NOTICES.md) and [the upstream BSD license](LICENSES/MIGHTY-BSD-3-Clause.txt).
+The combined release is distributed under [GPL-3.0-only](LICENSE). It builds on [MIT ACL MIGHTY](https://github.com/mit-acl/mighty). Original copyright notices and applicable third-party terms remain in force; see [third-party notices](THIRD_PARTY_NOTICES.md) and [the upstream BSD license](LICENSES/MIGHTY-BSD-3-Clause.txt).
