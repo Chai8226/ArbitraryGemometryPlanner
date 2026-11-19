@@ -9,29 +9,6 @@
 #include "mighty/mighty.hpp"
 #include "mighty/topp_seed.hpp"
 
-#include <cstring>
-
-namespace {
-thread_local std::function<void(const char*)> planning_stage_observer_;
-}
-
-thread_local const char* planning_stage_limit_ = nullptr;
-
-void MIGHTY::setPlanningStageObserver(std::function<void(const char*)> observer) {
-  planning_stage_observer_ = std::move(observer);
-}
-
-void MIGHTY::setPlanningStageLimit(const char* stage) {
-  planning_stage_limit_ = stage;
-}
-
-namespace {
-bool limitedTo(const char* stage) {
-  return planning_stage_limit_ != nullptr &&
-         std::strcmp(planning_stage_limit_, stage) == 0;
-}
-}  // namespace
-
 #include <chrono>
 #include <algorithm>
 #include <cmath>
@@ -293,7 +270,6 @@ void MIGHTY::resetData() {
     trajectory_execution_epoch_ = std::numeric_limits<double>::quiet_NaN();
   }
   middle_stage_time_ms_ = 0.0;
-  seed_stage_time_ms_ = refinement_stage_time_ms_ = -1.0;
   back_end_preparation_time_ms_ = 0.0;
   back_end_optimization_time_ms_ = 0.0;
   back_end_retime_time_ms_ = 0.0;
@@ -448,15 +424,10 @@ GlobalPlanResult MIGHTY::planGlobalOnce(const state& terminal_goal, double reque
   }
   global_planning_time_ = std::chrono::duration<double, std::milli>(
       std::chrono::steady_clock::now() - frontend_started).count();
-  if (planning_stage_observer_) planning_stage_observer_("idle");
   if (!terminal_goal.use_tracking_yaw && !shape_result.waypoints.empty()) {
     exact_goal.yaw = captured_start.yaw + std::remainder(
         shape_result.waypoints.back().yaw - captured_start.yaw, 2.0 * M_PI);
     exact_goal.use_tracking_yaw = true;
-  }
-  if (limitedTo("frontend")) {
-    return finish_frontend(
-        {GlobalPlanStage::SUCCESS, std::move(shape_result), {}});
   }
 
   return executeCertifiedShapePath(
@@ -551,8 +522,6 @@ GlobalPlanResult MIGHTY::executeCertifiedShapePath(
   const auto finish = [&](GlobalPlanResult result) {
     result.frontend_time_ms = global_planning_time_;
     result.middle_time_ms = middle_stage_time_ms_;
-    result.seed_stage_time_ms = seed_stage_time_ms_;
-    result.refinement_stage_time_ms = refinement_stage_time_ms_;
     result.route = trajectory_route_;
     result.derivative_activation_scales = derivative_activation_scales_;
     result.optimization_status = optimization_status_;
@@ -784,22 +753,6 @@ bool MIGHTY::generateGlobalPath(vec_Vecf<3>& global_path, double current_time,
 bool MIGHTY::planTrajectory(vec_Vecf<3>& global_path,
                                  GlobalPlanStage* failure_stage,
                                  std::string* failure_message) {
-  // Accumulate retries and early failures, while excluding trajectory export.
-  struct StageTimer {
-    double* total;
-    const std::function<void(const char*)>& observer;
-    std::chrono::steady_clock::time_point started{std::chrono::steady_clock::now()};
-    void stop() {
-      if (!total) return;
-      *total = std::max(0.0, *total) + std::chrono::duration<double, std::milli>(
-          std::chrono::steady_clock::now() - started).count();
-      total = nullptr;
-      if (observer) observer("idle");
-    }
-    void next(double& value) { stop(); total = &value; started = std::chrono::steady_clock::now(); }
-    ~StageTimer() { stop(); }
-  } stage_timer{&seed_stage_time_ms_, planning_stage_observer_};
-  if (planning_stage_observer_) planning_stage_observer_("middle");
   const auto fail = [&](GlobalPlanStage stage, std::string message) {
     if (failure_stage) *failure_stage = stage;
     if (failure_message) *failure_message = std::move(message);
@@ -911,16 +864,6 @@ bool MIGHTY::planTrajectory(vec_Vecf<3>& global_path,
     return fail(GlobalPlanStage::OPTIMIZATION_FAILED,
                 "warm-start preparation failed");
   }
-  if (limitedTo("middle")) {
-    record_middle_stage_time();
-    state seed;
-    getA(seed);
-    goal_setpoints_ = {seed};
-    middle_goal_setpoints_ = goal_setpoints_;
-    return true;
-  }
-  stage_timer.next(refinement_stage_time_ms_);
-  if (planning_stage_observer_) planning_stage_observer_("backend");
   initial_guess_computation_time_ = back_end_preparation_time_ms_;
   derivative_activation_scales_ =
       whole_traj_solver_ptr_->getDerivativeActivationScales();
@@ -1149,7 +1092,6 @@ bool MIGHTY::planTrajectory(vec_Vecf<3>& global_path,
 
   fopt_ = optimized_cost;
   trajectory_route_ = TrajectoryRoute::WHOLE_BODY_REFINED;
-  stage_timer.stop();
   whole_traj_solver_ptr_->getGoalSetpoints(middle_goal_setpoints_, true);
   record_middle_stage_time();
   trajectory_optimization_time_ = back_end_optimization_time_ms_;

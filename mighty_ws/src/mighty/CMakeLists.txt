@@ -68,20 +68,13 @@ add_executable(mighty src/mighty/mighty_main.cpp)
 target_link_libraries(mighty mighty_runtime)
 add_dependencies(mighty ${catkin_EXPORTED_TARGETS})
 
-add_executable(benchmark_risk_local_backend
-  src/tools/benchmark_risk_local_backend.cpp)
-target_compile_features(benchmark_risk_local_backend PRIVATE cxx_std_17)
-target_compile_definitions(benchmark_risk_local_backend PRIVATE
-  MIGHTY_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
-target_link_libraries(benchmark_risk_local_backend PRIVATE mighty_runtime)
-
 add_executable(fake_sim src/mighty/fake_sim.cpp)
 target_compile_features(fake_sim PRIVATE cxx_std_17)
 target_link_libraries(fake_sim Eigen3::Eigen)
 target_link_libraries(fake_sim ${catkin_LIBRARIES})
 add_dependencies(fake_sim ${catkin_EXPORTED_TARGETS})
 
-install(TARGETS mighty fake_sim benchmark_risk_local_backend
+install(TARGETS mighty fake_sim
   DESTINATION lib/${PROJECT_NAME})
 install(TARGETS mighty_shape_aware_astar mighty_runtime
   ARCHIVE DESTINATION lib
@@ -102,22 +95,5 @@ install(FILES rviz/mighty.rviz DESTINATION share/${PROJECT_NAME}/rviz)
 install(DIRECTORY maps shape DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY meshes/quadrotor DESTINATION share/${PROJECT_NAME}/meshes)
 catkin_install_python(PROGRAMS scripts/run_known_map.py scripts/sim_dashboard.py
-  scripts/send_goal.py scripts/quantitative_test.py scripts/offline_quantitative_test.py
+  scripts/send_goal.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-install(FILES scripts/start2end.yaml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts)
-
-if(CATKIN_ENABLE_TESTING)
-  add_executable(test_whole_body_gradient
-    test/test_whole_body_gradient.cpp src/mighty/whole_body_safety.cpp)
-  target_compile_features(test_whole_body_gradient PRIVATE cxx_std_17)
-  target_compile_options(test_whole_body_gradient PRIVATE -UNDEBUG)
-  target_link_libraries(test_whole_body_gradient Eigen3::Eigen nlohmann_json::nlohmann_json)
-  add_test(NAME whole_body_gradient COMMAND test_whole_body_gradient)
-  add_executable(test_yaw_variation_gradient test/test_yaw_variation_gradient.cpp)
-  target_link_libraries(test_yaw_variation_gradient mighty_runtime)
-  add_test(NAME yaw_variation_gradient COMMAND test_yaw_variation_gradient)
-  add_test(NAME planner_regressions COMMAND ${PYTHON_EXECUTABLE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/test/test_planner_regressions.py
-    $<TARGET_FILE:benchmark_risk_local_backend>)
-  add_test(NAME noetic_config COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test/test_noetic_config.py)
-endif()

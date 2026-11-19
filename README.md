@@ -6,6 +6,12 @@ PolyMap construction, geometry generation, competing planners, real-world experi
 
 ![ROS1 RViz demo: narrow map with planned trajectory and swept body geometry](docs/images/demo.png)
 
+![Trajectory planning through scattered obstacles](docs/images/1.gif)
+
+![Trajectory planning through an obstacle field](docs/images/2.gif)
+
+![Trajectory planning through a grid of openings](docs/images/3.gif)
+
 ## Requirements and build
 
 Use Ubuntu 20.04, ROS1 Noetic, and system Python 3.8. Install ROS Noetic before running the following commands. Run all commands from the repository root.
@@ -52,45 +58,10 @@ Coordinates are in metres. `--start-yaw` and `--goal-yaw` are in degrees; `--goa
 
 The launcher creates the `mighty_known_map` tmux session. Use `tmux attach -t mighty_known_map` to inspect it and `tmux kill-session -t mighty_known_map` to stop it. A pre-existing session is rejected unless explicitly replaced with `--kill-stale`; replacement checks ownership by checkout.
 
-## Validation and evaluation
-
-Run the configuration, gradient, and offline planner regression checks after building:
-
-```bash
-(cd mighty_ws/build/mighty && /usr/bin/ctest --output-on-failure)
-```
-
-For a ROS execution check, start an isolated master in one terminal:
-
-```bash
-bash mighty_ws/src/mighty/scripts/noetic_env.sh roscore -p 11321
-```
-
-In another terminal, from the repository root:
-
-```bash
-ROS_MASTER_URI=http://localhost:11321 \
-bash mighty_ws/src/mighty/scripts/noetic_env.sh \
-  /usr/bin/python3 mighty_ws/src/mighty/test/validate_noetic_runtime.py \
-  --representatives-only --results /tmp/arbitrary-geometry-ros
-```
-
-This selects one representative task per map and checks ROS startup, map publication, trajectory execution, arrival, and node shutdown. It does not launch RViz. Measured release checks and their limits are recorded in [validation results](docs/validation.md).
-
-For an offline benchmark task:
-
-```bash
-bash mighty_ws/src/mighty/scripts/run_quantitative_test.sh \
-  --case narrow-t --pair-limit 1 --results /tmp/arbitrary-geometry-results
-```
-
-The offline benchmark uses the built ROS environment for messages and executable discovery but does not require running ROS nodes. It writes JSON, CSV, and HTML reports. Offline planning and simulated arrival are separate checks; neither establishes real-hardware performance.
-
 ## Configuration and assets
 
 - `mighty_ws/src/mighty/config/mighty.yaml`: map, shape, task, and vehicle selections.
 - `mighty_ws/src/mighty/config/params/mighty_node.yaml`: search, optimization, and motion constraints.
-- `mighty_ws/src/mighty/scripts/start2end.yaml`: benchmark task fixtures.
 - [Asset format and coordinate conventions](docs/assets.md): final map and body files consumed by the runtime.
 
 ## License and provenance

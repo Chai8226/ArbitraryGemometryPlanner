@@ -14,7 +14,6 @@
 #include <cmath>
 #include <cstdio>
 #include <deque>
-#include <functional>
 #include <limits>
 #include <mutex>
 #include <string>
@@ -113,9 +112,6 @@ struct GlobalPlanResult {
   std::size_t trajectory_segment_count{0};
   double frontend_time_ms{0.0};
   double middle_time_ms{0.0};
-  // Exclusive downstream experiment stages; negative means never entered.
-  double seed_stage_time_ms{-1.0};
-  double refinement_stage_time_ms{-1.0};
   double backend_time_ms{0.0};
   double back_end_preparation_time_ms{0.0};
   double back_end_optimization_time_ms{0.0};
@@ -149,10 +145,6 @@ class MIGHTY {
 
   /** Execute one whole-map frontend -> whole-body L-BFGS planning pipeline. */
   GlobalPlanResult planGlobalOnce(const state& terminal_goal, double request_time);
-  // Optional instrumentation for the calling thread; does not change object layout.
-  static void setPlanningStageObserver(std::function<void(const char*)> observer);
-  // Experiment-only stop after a named stage. Null restores the production pipeline.
-  static void setPlanningStageLimit(const char* stage);
   /** Execute a previously collision-certified frontend path without replanning. */
   GlobalPlanResult planCertifiedShapePath(
       const std::vector<mighty::frontend::PoseState>& shape_path,
@@ -346,8 +338,6 @@ class MIGHTY {
       whole_body_safety_context_;
   TrajectoryRoute trajectory_route_{TrajectoryRoute::NONE};
   double middle_stage_time_ms_{0.0};
-  double seed_stage_time_ms_{-1.0};
-  double refinement_stage_time_ms_{-1.0};
   double back_end_preparation_time_ms_{0.0};
   double back_end_optimization_time_ms_{0.0};
   double back_end_retime_time_ms_{0.0};
